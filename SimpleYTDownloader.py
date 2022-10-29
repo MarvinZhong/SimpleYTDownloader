@@ -42,6 +42,9 @@ def main():
             downFile = ya[0].download(output_path=path)
             base, ext = os.path.splitext(downFile)
             new_file = base + '.mp3'
+            # check if file exist
+            if os.path.exists(new_file):
+                os.remove(new_file)
             os.rename(downFile, new_file)
     window.close()
 
