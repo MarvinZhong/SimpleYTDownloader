@@ -8,6 +8,7 @@ Youtube Doenloader That Doesn't Sucks
 - Subtitle Downloader
 - Select Audio Quality to Download
 - Select Video Quality to Download
+- Add Icon
 
 ## Credit
 

@@ -7,7 +7,8 @@ def main():
     sg.theme('DarkTeal9')   # Add a touch of color
 
     # All the stuff inside your window.
-    layout = [  [sg.Text('Enter the URL of the YouTube video you want to download', tooltip='Youtube Downloader Just Works')],
+    layout = [  
+                [sg.Text('Enter the URL of the YouTube video you want to download', tooltip='Youtube Downloader Just Works')],
                 [sg.InputText(key='-URL-')],
                 [sg.Button('Video', expand_x=True, key='-VIDEO-'), sg.Button('Audio', expand_x=True, key='-AUDIO-')],
                 [sg.Text(key='-OUTPUT-')]
@@ -21,16 +22,22 @@ def main():
         # donwload Path
         path = os.path.join(os.path.expanduser('~'), 'Downloads')
         # if user closes window
-        if values['-URL-']:
+        # if event == '-URL-':
+        #     yt = YouTube(values['-URL-'])
+        #     newValues = 'Title\t: ' + yt.title + '\n' + 'Views\t: ' + str(yt.views) + '\n' + 'Durations\t: ' + str(round(yt.length/60, 2)) + '\n'
+        #     window['-OUTPUT-'].update(newValues)
+        if event == sg.WIN_CLOSED or None:
+            break
+        elif event == '-VIDEO-':
             yt = YouTube(values['-URL-'])
             newValues = 'Title\t: ' + yt.title + '\n' + 'Views\t: ' + str(yt.views) + '\n' + 'Durations\t: ' + str(round(yt.length/60, 2)) + '\n'
             window['-OUTPUT-'].update(newValues)
-        if event == sg.WIN_CLOSED:
-            break
-        elif event == '-VIDEO-':
             ys = yt.streams.get_highest_resolution()
             ys.download(output_path=path)
         elif event == '-AUDIO-':
+            yt = YouTube(values['-URL-'])
+            newValues = 'Title\t: ' + yt.title + '\n' + 'Views\t: ' + str(yt.views) + '\n' + 'Durations\t: ' + str(round(yt.length/60, 2)) + '\n'
+            window['-OUTPUT-'].update(newValues)
             ya = yt.streams.filter(only_audio=True)
             downFile = ya[0].download(output_path=path)
             base, ext = os.path.splitext(downFile)
